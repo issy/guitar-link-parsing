@@ -1,10 +1,5 @@
-import asyncio
-import json
 import aiohttp
 import discord
-from discord.ext import commands
-import time
-import re
 import bs4
 from bs4 import BeautifulSoup as Soup
 
