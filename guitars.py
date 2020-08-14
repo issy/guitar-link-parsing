@@ -22,30 +22,27 @@ class Guitar(commands.Cog):
         if message.author.bot == True or message.author.id == self.client.user.id:
             return
 
-        if 'https://www.andertons.co.uk/guitar-dept/' in message.content.lower():
-            for word in message.content.lower().split(' '):
-                if not word.startswith('https://www.andertons.co.uk/guitar-dept/') or len(word) <= 57:
-                    continue
+        def contains_guitar_link(message):
+            return 'https://www.andertons.co.uk/guitar-dept/' in message or 'https://www.pmtonline.co.uk/' in message or 'https://www.thomann.de/' in message
+
+        if not contains_guitar_link(message.content.lower()):
+            return
+        for word in message.content.lower().split(' '):
+            if word.startswith('https://www.andertons.co.uk/guitar-dept/') and len(word) <= 57:
                 productData = await self.get_andertons_data(word)
                 if productData is None:
                     continue
                 newEmbed = await self.make_guitar_embed(productData)
                 await message.edit(suppress=True)
                 await message.channel.send(embed=newEmbed)
-        if 'https://www.pmtonline.co.uk/' in message.content.lower():
-            for word in message.content.lower().split(' '):
-                if not word.startswith('https://www.pmtonline.co.uk/') or len(word) <= 28:
-                    continue
+            if word.startswith('https://www.pmtonline.co.uk/') and len(word) <= 28:
                 productData = await self.get_pmt_data(word)
                 if productData is None:
                     continue
                 newEmbed = await self.make_guitar_embed(productData)
                 await message.edit(suppress=True)
                 await message.channel.send(embed=newEmbed)
-        if 'https://www.thomann.de/' in message.content.lower():
-            for word in message.content.lower().split(' '):
-                if not word.startswith('https://www.thomann.de/') or len(word) <= 23:
-                    continue
+            word.startswith('https://www.thomann.de/') and len(word) <= 23:
                 productData = await self.get_thomann_data(word)
                 if productData is None:
                     continue
