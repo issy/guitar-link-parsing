@@ -42,7 +42,7 @@ class Guitar(commands.Cog):
                 newEmbed = await self.make_guitar_embed(productData)
                 await message.edit(suppress=True)
                 await message.channel.send(embed=newEmbed)
-            word.startswith('https://www.thomann.de/') and len(word) <= 23:
+            if word.startswith('https://www.thomann.de/') and len(word) <= 23:
                 productData = await self.get_thomann_data(word)
                 if productData is None:
                     continue
